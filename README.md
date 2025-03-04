@@ -8,20 +8,19 @@ CineMatch es una plataforma full stack de recomendación y reseñas de película
 - **FastAPI** para construir la API RESTful.
 - **SQLAlchemy** como ORM para la gestión de la base de datos.
 - **JWT** o mecanismos alternativos para la autenticación de usuarios.
-- Pruebas unitarias usando **pytest** o **unittest**.
-- Documentación automática de la API con **Swagger UI**.
+- Pruebas unitarias usando **pytest**.
 
 ### Base de Datos
-- **SQLite** para el desarrollo y **PostgreSQL** para producción.
+- **PostgreSQL**.
 - Tablas:
-  - **Usuarios**: id, nombre, email, contraseña (almacenada de forma segura).
-  - **Películas**: id, título, descripción, fecha de lanzamiento, imagen.
-  - **Reseñas**: id, user_id (FK), movie_id (FK), puntuación, comentario, fecha.
-  - **Favoritos**: id, user_id (FK), movie_id (FK).
+  - **Usuarios**: userid, username, useremail, passwordhash, createddatetime, modifieddatetime.
+  - **Películas**: movieid, tmdbid, movietitle, moviedescription, releasedate, posteurl, genres, tmdbrating, createddatetime.
+  - **Reseñas**: reviewid, userid (FK), movieid (FK), reviewcomment, reviewrating, createddatetime, modifieddatetime.
+  - **Favoritos**: favoriteid, userid (FK), movieid (FK), createddatetime.
 
 ### Frontend
-- **React** (o Vanilla JS si se prefiere) para la construcción de la interfaz.
-- Comunicación con el backend a través de **fetch** o **axios**.
+- **React** para la construcción de la interfaz.
+- Comunicación con el backend a través de **axios**.
 - Búsqueda de películas en tiempo real y visualización de resultados.
 - Funciones de registro, inicio de sesión, y gestión de favoritos.
 
@@ -29,10 +28,16 @@ CineMatch es una plataforma full stack de recomendación y reseñas de película
 
 ### Backend
 
-- **GET /movies?query=<término>**: Busca películas en la base de datos local. Si no se encuentra, consulta a TMDB.
+- **GET /movies/movie?query=<name>**: Busca películas en la base de datos local. Si no se encuentra, consulta a TMDB.
 - **GET /movies/{id}**: Obtiene el detalle completo de una película.
+- **GET /movies/{id}/reviews**: Obtiene las reseñas de una película.
+- **GET /reviews**: Obtiene las reseñas de del usuario.
 - **POST /reviews**: Permite a los usuarios autenticados crear reseñas de películas.
-- **GET /users/{id}/favorites**: Muestra las películas favoritas de un usuario.
+- **DELETE /reviews/{id}**: Permite eliminar una reseña.
+- **GET /users/user/favorites**: Muestra las películas favoritas de un usuario.
+- **POST /users/user/{movieid}**: Permite al usuario autenticados añadir una película a favoritos.
+- **DELETE /users/user/favorites/{favoriteid}**: Permite eliminar una película de favoritos.
+- **GET /users/user**: Muestra los detalles del usuario.
 - **POST /auth/register**: Registra un nuevo usuario.
 - **POST /auth/login**: Inicia sesión de un usuario.
 
@@ -45,7 +50,7 @@ CineMatch es una plataforma full stack de recomendación y reseñas de película
 
 1. Clonar el repositorio:
     ```bash
-    git clone https://github.com/usuario/CineMatch.git
+    git clone https://github.com/jeancarlosarias/CineMatch.git
     cd CineMatch
     ```
 
@@ -64,7 +69,7 @@ CineMatch es una plataforma full stack de recomendación y reseñas de película
     - Crea un archivo `.env` en la raíz del proyecto y agrega las siguientes variables:
       ```
       TMDB_API_KEY=<tu_api_key>
-      DATABASE_URL=sqlite:///./test.db  # Para desarrollo
+      DATABASE_URL=postgresql://user:passwors@server:port/db"
       ```
 
 5. Ejecutar el servidor:
@@ -91,8 +96,3 @@ CineMatch es una plataforma full stack de recomendación y reseñas de película
 
 4. Abrir en el navegador: [http://localhost:3000](http://localhost:3000)
 
-## Pruebas
-
-Para ejecutar las pruebas unitarias del backend, usa el siguiente comando:
-```bash
-pytest
