@@ -1,0 +1,43 @@
+# Dependencias de Node.js
+node_modules/
+
+# Archivos de caché de npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de caché de herramientas de desarrollo
+frontend/node_modules/.cache/
+
+# Archivos de configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de logs
+*.log
+
+# Archivos generados por el sistema de build o de empaquetado
+dist/
+build/
+*.tgz
+
+# Archivos temporales de editores
+.vscode/
+.idea/
+*.swp
+
+# Archivos de la carpeta de pruebas
+coverage/
+
+# Archivos de configuración de Docker (si los hay)
+docker-compose.override.yml
+Dockerfile*
+dockerignore
+
+# Archivos de configuración de Git
+.gitmodules
+.gitconfig
+
+# Archivos específicos de CI/CD (si se usan)
+*.yml
+*.yaml
